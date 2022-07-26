@@ -181,7 +181,8 @@ export function parseJsonAsset<T>(bundle: OutputBundle, key: string): T {
  * #282](https://github.com/crxjs/chrome-extension-tools/issues/282)
  */
 export const getMatchPatternOrigin = (pattern: string): string => {
-  if (pattern === '<all_urls>') return pattern
+  // support <all_urls> and <dynamic_script>
+  if (pattern.startsWith('<')) return pattern
   const [schema, rest] = pattern.split('://')
   const [origin, pathname] = rest.split('/')
   const root = `${schema}://${origin}`
